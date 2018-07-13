@@ -1,0 +1,40 @@
+
+<%= form_tag '/load_reports', class: "expeses_report_form" do %>
+	<%=select_tag 'month',options_for_select(Date::MONTHNAMES.compact)%>
+	<button class="btn btn-default" type="submit">Search</button><br/>
+<% end %>
+
+
+<span class="total_income"></span><br/>
+<span class="total_expenses"></span><br/>
+<span class="savings"></span><br/>
+
+<%= link_to "Home Page",root_path,class:"btn btn-info"%>
+
+<%= content_for :scripts do %>
+	<script type="text/javascript">
+		$(document).on("submit", ".expeses_report_form", function(event){
+			var report_form = $(this);
+			event.preventDefault();
+			$.ajax({
+				beforeSend: function(){
+					report_form.find("[type='submit']").attr("disabled", "disabled").text("Loading...");
+				},
+				url: "/load_reports",
+				data: report_form.serialize(),
+				success: function(data){
+					console.log(data);
+					$(".total_income").text("Total Income: Rs "+data.total_income);
+					$(".total_expenses").text("Total Expenses: Rs "+data.total_expenses);
+					$(".savings").text("Savings: Rs "+data.savings);
+				},
+				error: function(jqXhr){
+					console.log("Exception Raised!");
+				},
+				complete: function(){
+					report_form.find("[type='submit']").removeAttr("disabled").html("Search");	
+				}
+			});
+		});
+	</script>
+<% end %>

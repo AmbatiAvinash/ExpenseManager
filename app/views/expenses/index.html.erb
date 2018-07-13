@@ -1,0 +1,43 @@
+<div class="row form-group">
+	<div class="col-md-8">
+		Showing expenses for <%= current_user.email %> 
+	</div>
+	<div class="col-md-4 text-right">
+		<a href="<%= new_expense_path %>" class="btn btn-success">Add Expenses</a>
+	</div>
+</div>
+<div class="row">
+	<div class="col-md-12">
+		<table class="table table-bordered">
+			<thead>
+				<tr>
+					<th>Name</th>
+					<th>Date</th>
+					<th>Type</th>
+					<th>Amount</th>
+					<th>Added on</th>
+					<th>Actions</th>
+				</tr>
+			</thead>
+			<tbody>
+				<% @expenses.each do |expense| %>
+					<tr>
+						<td><%=expense.name%></td>
+						<td><%=expense.expense_date%></td>
+						<td><%=expense.type%></td>
+						<td><%=expense.amount%></td>
+						<td><%=expense.created_at%></td>
+						<td>
+							<%= link_to "Edit", edit_expense_path(expense), class: "btn btn-warning" %>
+							<%= link_to "Delete", expense_path(expense), class: "btn btn-danger", method: :delete, data: {confirm: "Are you sure?"} %>
+						</td>
+					</tr>
+				<% end %>
+			</tbody>
+		</table>
+	</div>
+</div>
+<%=link_to "Home Page",root_path, class: "btn btn-info"%>
+	
+
+				

@@ -1,0 +1,16 @@
+<%= form_for @income  do |f|%>
+<p>
+	<%=f.label :amount%>
+	<%=f.text_field :amount%>
+	<span class="text-danger"><%= (@income.errors[:amount].present?) ? @income.errors[:amount].first : "" %></span>
+</p>
+
+<p>
+	<%=f.label :month %>
+	<%= f.select :month, ['January', 'February','March','April','May','June','July','August','September','October','November','December']%>
+</p>
+
+<p>
+	<%=f.submit%>
+</p>
+<% end %>
